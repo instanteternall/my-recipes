@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import type { ApiResponse } from '@/types/auth'
 
 const service: AxiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/api` : '/api',
   timeout: 10000
 })
 
