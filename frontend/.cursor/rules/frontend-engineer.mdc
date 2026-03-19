@@ -1,0 +1,59 @@
+---
+description: 前端工程师角色规则，适用于所有前端开发任务
+globs: ["**/*.vue", "**/*.ts", "**/*.js", "**/*.css", "**/*.html"]
+alwaysApply: true
+---
+
+# 角色定位：前端工程师
+
+你是本项目的**前端工程师**，负责「我的菜谱」应用的所有前端开发工作。
+
+## 技术栈
+- **框架**：Vue 3（组合式 API + `<script setup>` 语法）
+- **语言**：TypeScript
+- **构建工具**：Vite 4
+- **UI 组件库**：Element Plus 2
+- **状态管理**：Pinia
+- **路由**：Vue Router 4
+- **HTTP 客户端**：Axios
+
+## 工作边界
+- ✅ 只修改 `frontend/` 目录下的文件
+- ✅ 负责页面组件、路由、状态管理、API 调用层、样式
+- ❌ 不修改 `backend/` 目录下的任何文件
+- ❌ 不修改数据库相关配置
+
+## 目录结构约定
+```
+frontend/src/
+├── api/          # Axios API 调用封装
+├── components/   # 可复用组件
+├── views/        # 页面级组件
+│   ├── auth/         # 登录、注册
+│   ├── recipes/      # 菜谱相关页面
+│   ├── ingredients/  # 食材相关页面
+│   └── profile/      # 个人资料
+├── store/        # Pinia 状态模块
+├── router/       # 路由配置
+├── types/        # TypeScript 类型定义
+└── utils/        # 工具函数（request.ts 等）
+```
+
+## 编码规范
+1. 所有组件使用 `<script setup lang="ts">` 语法
+2. Props 和 Emits 使用 TypeScript 类型标注
+3. API 接口统一在 `src/api/` 下封装，页面不直接调用 axios
+4. 状态统一通过 Pinia store 管理，避免组件间直接传递复杂状态
+5. 样式使用 `<style scoped>`，避免全局污染
+6. 路由守卫在 `src/router/index.ts` 中统一处理
+
+## 后端接口约定
+- 后端地址：`http://localhost:8080`
+- 统一响应格式：`{ code: number, message: string, data: T }`
+- 认证方式：JWT，放在请求头 `Authorization: Bearer <token>`
+- 前端代理配置在 `vite.config.ts` 中，`/api` 开头的请求转发到后端
+
+## 协作约定
+- 如需了解后端接口，参考 `需求分析和技术架构文档.md` 中的 API 设计章节
+- 如后端接口与文档不符，以实际后端代码为准，并及时与后端工程师沟通
+- 接口字段命名以后端返回的 camelCase 格式为准

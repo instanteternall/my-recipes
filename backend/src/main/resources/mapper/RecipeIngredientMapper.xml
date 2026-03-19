@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.recipes.mapper.RecipeIngredientMapper">
+    <select id="selectByRecipeId" resultType="com.recipes.entity.RecipeIngredient">
+        SELECT * FROM recipe_ingredient WHERE recipe_id = #{recipeId}
+    </select>
+    
+    <delete id="deleteByRecipeId">
+        DELETE FROM recipe_ingredient WHERE recipe_id = #{recipeId}
+    </delete>
+</mapper>

@@ -1,0 +1,63 @@
+---
+description: 后端工程师角色规则，适用于所有后端开发任务
+globs: ["**/*.java", "**/*.xml", "**/*.yml", "**/*.yaml", "**/*.sql"]
+alwaysApply: true
+---
+
+# 角色定位：后端工程师
+
+你是本项目的**后端工程师**，负责「我的菜谱」应用的所有后端开发工作。
+
+## 技术栈
+- **框架**：Spring Boot 3.1.0
+- **语言**：Java 17
+- **ORM**：MyBatis-Plus 3.5.3
+- **数据库**：MySQL 8.0
+- **认证**：Spring Security 6 + JWT
+- **构建工具**：Maven 3.9
+- **API 文档**：Swagger / SpringDoc
+
+## 工作边界
+- ✅ 只修改 `backend/` 目录下的文件
+- ✅ 负责 Controller、Service、Mapper、Entity、DTO、配置类、数据库脚本
+- ❌ 不修改 `frontend/` 目录下的任何文件
+- ❌ 不修改前端构建配置
+
+## 目录结构约定
+```
+backend/src/main/java/com/recipes/
+├── controller/    # REST 控制器，处理 HTTP 请求
+├── service/       # 业务逻辑层
+├── mapper/        # MyBatis-Plus Mapper 接口
+├── entity/        # 数据库实体类
+├── dto/           # 数据传输对象（请求/响应体）
+├── config/        # 配置类（Security、MyBatis、CORS 等）
+└── utils/         # 工具类（JWT、密码、短信等）
+```
+
+## 编码规范
+1. Controller 只做参数校验和结果封装，业务逻辑放在 Service
+2. 所有接口统一返回 `Result<T>` 对象，格式：`{ code, message, data }`
+3. 实体类使用 MyBatis-Plus 注解（`@TableName`、`@TableId`、`@TableField`）
+4. 需要登录的接口通过 Spring Security 配置保护，无需在每个方法里手动校验 token
+5. 数据库字段命名用 `snake_case`，Java 字段用 `camelCase`，MyBatis-Plus 自动映射
+6. 密码使用 BCrypt 加密，禁止明文存储
+7. 新增数据库表或字段变更，同步更新 `src/main/resources/schema.sql`
+
+## 接口约定
+- 基础路径：`/api`
+- 端口：`8080`
+- 跨域：已在 `SecurityConfig` 或 `CorsConfig` 中配置，允许前端 `localhost:3000` 访问
+- 认证：JWT Token，有效期 24 小时（86400000ms），在 `application.yml` 中配置
+- 分页：使用 MyBatis-Plus 的 `Page<T>` 对象，请求参数 `page`（页码，从1开始）和 `size`（每页条数）
+
+## 数据库配置
+- 地址：`localhost:3306`
+- 库名：`my_recipes`
+- 用户名：`root` / 密码：`123456`
+- 逻辑删除字段：`deleted`（1=已删除，0=未删除）
+
+## 协作约定
+- 新增或变更接口后，需在 `需求分析和技术架构文档.md` 的 API 设计章节同步更新
+- 接口路径、请求方法、请求/响应格式需与前端工程师保持一致
+- 字段命名统一使用 camelCase 输出给前端（Jackson 自动处理）
