@@ -19,10 +19,11 @@
 
     <!-- 特性 -->
     <section class="features">
-      <div class="feature-card" v-for="f in features" :key="f.title">
+      <div class="feature-card" v-for="f in features" :key="f.title" @click="$router.push(f.link)" style="cursor:pointer">
         <div class="feature-emoji">{{ f.icon }}</div>
         <h3>{{ f.title }}</h3>
         <p>{{ f.desc }}</p>
+        <span class="feature-link">前往 →</span>
       </div>
     </section>
 
@@ -72,9 +73,9 @@ const hotLoading = ref(false)
 const hotRecipes = ref<Recipe[]>([])
 
 const features = [
-  { icon: '📒', title: '菜谱收藏', desc: '把家传秘方、创意料理一一记录，随时翻阅' },
-  { icon: '🛒', title: '食材管理', desc: '掌握冰箱库存，减少浪费，合理安排采购' },
-  { icon: '🔍', title: '快速搜索', desc: '按名称、分类、难度，秒找心仪菜谱' },
+  { icon: '📒', title: '菜谱收藏', desc: '把家传秘方、创意料理一一记录，随时翻阅', link: '/recipes' },
+  { icon: '🛒', title: '食材管理', desc: '掌握冰箱库存，减少浪费，合理安排采购', link: '/ingredients' },
+  { icon: '🔍', title: '快速搜索', desc: '按名称、分类、难度，秒找心仪菜谱', link: '/search' },
 ]
 
 const loadHotRecipes = async () => {
@@ -239,6 +240,19 @@ onMounted(() => loadHotRecipes())
   font-size: 13px;
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+.feature-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.feature-card:hover .feature-link {
+  transform: translateX(4px);
 }
 
 /* Hot Section */
