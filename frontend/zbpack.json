@@ -1,0 +1,7 @@
+{
+  "build": {
+    "builder": "STATIC",
+    "buildCommand": "npm install && npm run build",
+    "outputDir": "dist"
+  }
+}
