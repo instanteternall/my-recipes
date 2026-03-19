@@ -28,3 +28,7 @@ export const sendSms = (data: SmsRequest) => {
 export const verifySms = (data: SmsVerifyRequest) => {
   return request.post<ApiResponse<null>>('/auth/verify-sms', data)
 }
+
+export const changePassword = (data: { oldPassword: string; newPassword: string }) => {
+  return request.post<ApiResponse<null>>('/auth/change-password', data)
+}
